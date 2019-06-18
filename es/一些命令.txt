@@ -1,0 +1,64 @@
+1:创建索引
+curl -XPUT http://10.51.237.173:9200/index
+
+curl -XPUT 'http://10.51.237.173:9200/index' -d '{
+	"settings":{
+		"index":{
+			"number_of_shard":2,
+			"number_of_replicas":1
+		}
+	}
+}'
+
+
+2:查看索引
+curl -XGET http://10.51.237.173:9200/_cat/indices?v
+
+
+3:插入数据
+curl -H "Content-Type: application/json" -XPOST http://10.51.237.173:9200/index/class/3 -d '
+{"name":"装机","class":2}
+'
+
+curl -H "Content-Type: application/json" -XPUT http://10.51.237.173:9200/index/class/3 -d '
+{"name":"装机","class":2}
+'
+
+
+## 自动创建id
+curl -H "Content-Type: application/json" -XPOST http://10.51.237.173:9200/index/class -d '
+{"name":"网络","class":2}
+'
+
+3：修改默认就是覆盖
+
+4：区分修改和新增
+4.1 参数
+curl -H "Content-Type: application/json" -XPOST http://10.51.237.173:9200/index/class/1?op_type=create -d '
+{"name":"网络t","class":2}
+'
+4.2 restful
+curl -H "Content-Type: application/json" -XPOST http://10.51.237.173:9200/index/class/1/_create -d '
+{"name":"网络t","class":2}
+'
+
+
+
+5：查询数据
+5.1 url查询
+curl -XGET http://10.51.237.173:9200/index/class/1?pretty\&_source=name,class\&order
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
